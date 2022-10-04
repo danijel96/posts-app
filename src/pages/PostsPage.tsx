@@ -1,11 +1,8 @@
 import CustomDropdown from 'component/Form/CustomDropdown';
 import Post from 'component/Post';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getAllComments } from 'services/endpoints/comments/commentsApi';
-import {
-  getAllPosts,
-  getPostByUserId,
-} from 'services/endpoints/posts/postsApi';
+import { getAllPosts, getPostByUserId } from 'services/endpoints/posts/postsApi';
 import { getAllUsers } from 'services/endpoints/users/usersApi';
 import { IComment, IPost, IUser } from 'types';
 
@@ -24,30 +21,30 @@ const PostsPage = ({ helloFrom }: IPosts) => {
     getAllComments().then((res) => setComments(res?.result?.data));
   }, [helloFrom]);
 
-  function handleClick(e: any) {
-    if (e === '0') {
+  function handleClick(e: React.ChangeEvent<HTMLSelectElement>) {
+    if (e.target.value === '0') {
       getAllPosts().then((res) => setPosts(res?.result?.data));
       return;
     }
-    getPostByUserId({ userId: e }).then((res) => setPosts(res?.result?.data));
+    getPostByUserId({ userId: e.target.value }).then((res) => setPosts(res?.result?.data));
   }
 
   const findUser = (userId: number): IUser | undefined => {
-    let findUser: IUser | undefined;
-    findUser = users?.find((user) => user.id === userId) || undefined;
+    const findUser: IUser | undefined = users?.find((user) => user.id === userId) || undefined;
     if (findUser) return findUser;
   };
 
   const filterComments = (postId: number): IComment[] => {
-    let filterComments: IComment[] | undefined;
-    filterComments = comments?.filter((comment) => comment.postId === postId);
+    const filterComments: IComment[] | undefined = comments?.filter(
+      (comment) => comment.postId === postId
+    );
 
     if (filterComments) return filterComments;
     return [];
   };
-  let dropdownData = users.map((user) => ({
+  const dropdownData = users.map((user) => ({
     value: user.id,
-    label: user.name,
+    label: user.name
   }));
 
   if (!posts.length) return <p>Loading...</p>;

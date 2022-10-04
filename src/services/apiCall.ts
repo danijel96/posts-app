@@ -1,9 +1,10 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { Endpoint } from 'types/enums/APIEndpointEnum';
 import { Method } from 'types/enums/MethodEnum';
 import { API_URL } from './constant.service';
 
 type APICallProps = {
-  url: string;
+  url: Endpoint;
   method: Method;
   data?: any;
   urlSuffix?: string | number;
@@ -16,7 +17,7 @@ export default async function apiCall({
   data,
   urlSuffix,
   params,
-  contentType = 'application/json',
+  contentType = 'application/json'
 }: APICallProps) {
   try {
     const result = await axios({
@@ -26,24 +27,16 @@ export default async function apiCall({
       data,
       params,
       headers: {
-        'Content-type': contentType,
-      },
+        'Content-type': contentType
+      }
     });
     return { result };
   } catch (error: any) {
-    if (error?.response) {
-      return {
-        error: {
-          status: parseInt(error.response?.status),
-          message: error.response?.data?.message,
-        },
-      };
-    }
     if (error instanceof Error) {
       return {
         error: {
-          message: error.message,
-        },
+          message: error.message
+        }
       };
     }
   }

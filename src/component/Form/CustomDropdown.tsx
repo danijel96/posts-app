@@ -7,7 +7,7 @@ export interface IData {
 interface ICustomDropdown {
   data: IData[];
   name: string;
-  handleChange: (data: string) => void;
+  handleChange: (data: React.ChangeEvent<HTMLSelectElement>) => void;
   helloFrom: string;
   placeholder?: string;
   value?: string | number;
@@ -18,7 +18,7 @@ const CustomDropdown = ({
   handleChange,
   placeholder,
   value,
-  helloFrom,
+  helloFrom
 }: ICustomDropdown) => {
   useEffect(() => {
     console.log(`${helloFrom} CustomDropdown component`);
@@ -30,8 +30,7 @@ const CustomDropdown = ({
         id={name}
         value={value}
         placeholder={placeholder}
-        onChange={(e) => handleChange(e.target.value)}
-      >
+        onChange={(e) => handleChange(e)}>
         <option key={0} value={0}>
           {''}
         </option>
