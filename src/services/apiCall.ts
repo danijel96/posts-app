@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Method } from '../types/enums/MethodEnum';
+import { Method } from 'types/enums/MethodEnum';
 import { API_URL } from './constant.service';
 
 type APICallProps = {

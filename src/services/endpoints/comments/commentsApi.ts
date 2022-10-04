@@ -1,19 +1,18 @@
-import { Method } from '../../../types/enums/MethodEnum';
-import apiCall from '../../apiCall';
+import apiCall from 'services/apiCall';
+import { IParams } from 'types/api';
+import { Endpoint } from 'types/enums/APIEndpointEnum';
+import { Method } from 'types/enums/MethodEnum';
 
-interface IParams {
-  postId: string;
-}
 export const getAllComments = async () => {
   const result = await apiCall({
-    url: 'comments',
+    url: Endpoint.Comments,
     method: Method.Get,
   });
   return result;
 };
 export const getCommentsByPostId = async (params: IParams) => {
   const result = await apiCall({
-    url: 'comments',
+    url: Endpoint.Comments,
     params,
     method: Method.Get,
   });

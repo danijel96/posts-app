@@ -1,6 +1,14 @@
+import { useEffect } from 'react';
 import { CommentIcon, LikeIcon, ShareIcon } from './Icons';
 
-const ReactIcons = () => {
+interface IReactIcons {
+  helloFrom: string;
+}
+const ReactIcons = ({ helloFrom }: IReactIcons) => {
+  useEffect(() => {
+    console.log(`${helloFrom} ReactIcons component`);
+  }, [helloFrom]);
+
   return (
     <div className="react-icons flex items-center my-3 ml-3">
       <LikeIcon width={24} className="cursor-pointer" />

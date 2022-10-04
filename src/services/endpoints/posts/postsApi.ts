@@ -1,9 +1,10 @@
-import { Method } from '../../../types/enums/MethodEnum';
-import apiCall from '../../apiCall';
+import apiCall from 'services/apiCall';
+import { Endpoint } from 'types/enums/APIEndpointEnum';
+import { Method } from 'types/enums/MethodEnum';
 
 export const getAllPosts = async () => {
   const result = await apiCall({
-    url: 'posts',
+    url: Endpoint.Posts,
     method: Method.Get,
   });
   return result;
@@ -11,7 +12,7 @@ export const getAllPosts = async () => {
 
 export const getPostById = async (urlSuffix: string) => {
   const result = await apiCall({
-    url: 'posts',
+    url: Endpoint.Posts,
     urlSuffix,
     method: Method.Get,
   });
@@ -20,7 +21,7 @@ export const getPostById = async (urlSuffix: string) => {
 
 export const getPostByUserId = async (params: { userId: string }) => {
   const result = await apiCall({
-    url: 'posts',
+    url: Endpoint.Posts,
     params,
     method: Method.Get,
   });

@@ -1,9 +1,14 @@
-import { IComment } from '../types';
+import { useEffect } from 'react';
+import { IComment } from 'types';
 
 interface ICommentSection {
   comment: IComment;
+  helloFrom: string;
 }
-export function CommentsSection({ comment }: ICommentSection) {
+export function CommentsSection({ comment, helloFrom }: ICommentSection) {
+  useEffect(() => {
+    console.log(`${helloFrom} CommentsSection component`);
+  }, [helloFrom]);
   return (
     <div key={comment.id} className="pl-5 pr-10 mt-5">
       <p className="text-[12px] text-[#1A272A] font-bold">{comment.name}</p>
