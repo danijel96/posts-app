@@ -49,27 +49,36 @@ const PostsPage = ({ helloFrom }: IPosts) => {
 
   if (!posts.length) return <p>Loading...</p>;
   return (
-    <div className="px-5 py-1 bg-[#f0f7f6]">
-      <h1>Posts Page</h1>
-      <div className="flex mb-5">
-        <p className="mr-3">Filter posts by User</p>
-        <CustomDropdown
-          name="user"
-          handleChange={handleClick}
-          data={dropdownData}
-          placeholder="Choose user"
-          helloFrom="Hello from"
-        />
+    <div className="bg-[#f0f7f6] min-w-[300px] mx-auto px-5 md:px-0 py-1 flex">
+      <div className="px-5 py-1 lg:w-[70%] xl:w-[65%]">
+        <h1>Posts Page</h1>
+        <div className="flex mb-5">
+          <p className="mr-3">Filter posts by User</p>
+          <CustomDropdown
+            name="user"
+            handleChange={handleClick}
+            data={dropdownData}
+            placeholder="Choose user"
+            helloFrom="Hello from"
+          />
+        </div>
+        {posts.map((post) => (
+          <Post
+            post={post}
+            key={post.id}
+            filterComments={filterComments}
+            findUser={findUser}
+            helloFrom="Hello from"
+          />
+        ))}
       </div>
-      {posts.map((post) => (
-        <Post
-          post={post}
-          key={post.id}
-          filterComments={filterComments}
-          findUser={findUser}
-          helloFrom="Hello from"
-        />
-      ))}
+      <div className="aside hidden mt-5 lg:flex flex-col w-[30%] xl:w-[35%] items-center [&>*]:mb-5 [&>*]:rounded-[20px] [&>*]:max-w-[300px]">
+        <h3 className="flex justify-center ">Aside content</h3>
+        <img src="https://via.placeholder.com/300/771796" alt="banner-1" />
+        <img src="https://via.placeholder.com/300/24f355" alt="banner-2" />
+        <img src="https://via.placeholder.com/300/d32776" alt="banner-3" />
+        <img src="https://via.placeholder.com/300/fdf73e" alt="banner-3" />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { Endpoint } from 'types/enums/APIEndpointEnum';
 import { Method } from 'types/enums/MethodEnum';
 import { API_URL } from './constant.service';

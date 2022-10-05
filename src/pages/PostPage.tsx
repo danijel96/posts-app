@@ -19,10 +19,8 @@ const PostPage = ({ helloFrom }: IPosts) => {
     console.log(`${helloFrom} PostPage component`);
 
     getPostById(params.id).then((res) => setPost(res?.result?.data));
-    getCommentsByPostId({ postId: params?.id }).then((res) =>
-      setComments(res?.result?.data)
-    );
-  }, [helloFrom]);
+    getCommentsByPostId({ postId: params?.id }).then((res) => setComments(res?.result?.data));
+  }, [helloFrom, params.id]);
   useEffect(() => {
     if (post?.userId) {
       getUserByUserId(post?.userId).then((res) => setUser(res?.result?.data));
@@ -31,14 +29,9 @@ const PostPage = ({ helloFrom }: IPosts) => {
 
   if (!post) return <p>Loading...</p>;
   return (
-    <div key={post?.id} className="max-w-[750px] mx-auto my-7">
-      <Post
-        post={post}
-        key={post.id}
-        comments={comments}
-        user={user}
-        helloFrom="Hello from"
-      />
+    <div className="max-w-[750px] min-w-[300px] mx-auto my-7 px-5 md:px-0">
+      <h1 className="text-center">Single Post Page</h1>
+      <Post post={post} key={post.id} comments={comments} user={user} helloFrom="Hello from" />
     </div>
   );
 };
