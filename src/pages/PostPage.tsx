@@ -15,11 +15,27 @@ const PostPage = ({ helloFrom }: IPosts) => {
   const [post, setPost] = useState<IPost | null>(null);
   const [comments, setComments] = useState<IComment[] | undefined>(undefined);
   const [user, setUser] = useState<IUser | undefined>(undefined);
+  const [error, setError] = useState<string>('');
+
   useEffect(() => {
     console.log(`${helloFrom} PostPage component`);
 
-    getPostById(params.id).then((res) => setPost(res?.result?.data));
-    getCommentsByPostId({ postId: params?.id }).then((res) => setComments(res?.result?.data));
+    getPostById(params.id).then((res) => {
+      if (res?.error) {
+        setError(res?.error?.message);
+        return;
+      } else {
+        setPost(res?.result?.data);
+      }
+    });
+    getCommentsByPostId({ postId: params?.id }).then((res) => {
+      if (res?.error) {
+        setError(res?.error?.message);
+        return;
+      } else {
+        setComments(res?.result?.data);
+      }
+    });
   }, [helloFrom, params.id]);
   useEffect(() => {
     if (post?.userId) {
@@ -27,6 +43,8 @@ const PostPage = ({ helloFrom }: IPosts) => {
     }
   }, [post]);
 
+  if (error.length && !comments?.length)
+    return <p className="flex h-screen justify-center items-center">{error}</p>;
   if (!post) return <p>Loading...</p>;
   return (
     <div className="max-w-[750px] min-w-[300px] mx-auto my-7 px-5 md:px-0">

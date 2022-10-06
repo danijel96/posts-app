@@ -26,6 +26,7 @@ const CustomDropdown = ({
   return (
     <div className="custom-dropdown">
       <select
+        className="rounded-[8px] py-1"
         name={name}
         id={name}
         value={value}

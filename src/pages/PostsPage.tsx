@@ -13,12 +13,34 @@ const PostsPage = ({ helloFrom }: IPosts) => {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     console.log(`${helloFrom} PostsPage component`);
-    getAllPosts().then((res) => setPosts(res?.result?.data));
-    getAllUsers().then((res) => setUsers(res?.result?.data));
-    getAllComments().then((res) => setComments(res?.result?.data));
+    getAllPosts().then((res) => {
+      if (res?.error) {
+        setError(res?.error?.message);
+        return;
+      } else {
+        setPosts(res?.result?.data);
+      }
+    });
+    getAllUsers().then((res) => {
+      if (res?.error) {
+        setError(res?.error?.message);
+        return;
+      } else {
+        setUsers(res?.result?.data);
+      }
+    });
+    getAllComments().then((res) => {
+      if (res?.error) {
+        setError(res?.error?.message);
+        return;
+      } else {
+        setComments(res?.result?.data);
+      }
+    });
   }, [helloFrom]);
 
   function handleClick(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -47,13 +69,14 @@ const PostsPage = ({ helloFrom }: IPosts) => {
     label: user.name
   }));
 
-  if (!posts.length) return <p>Loading...</p>;
+  if (error.length) return <p className="flex h-screen justify-center items-center">{error}</p>;
+  if (!posts.length && !users.length && !comments.length) return <p>Loading...</p>;
   return (
     <div className="bg-[#f0f7f6] min-w-[300px] mx-auto px-5 md:px-0 py-1 flex">
       <div className="px-5 py-1 lg:w-[70%] xl:w-[65%]">
         <h1>Posts Page</h1>
-        <div className="flex mb-5">
-          <p className="mr-3">Filter posts by User</p>
+        <div className="flex mb-5 flex-col sm:flex-row">
+          <p className="mr-3 mb-2 sm:mb-0">Filter posts by User</p>
           <CustomDropdown
             name="user"
             handleChange={handleClick}
